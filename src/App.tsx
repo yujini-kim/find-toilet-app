@@ -1,10 +1,9 @@
-import KakaoMap from "./components/Kakaomap";
+import Router from "./route";
 
 function App() {
   return (
     <>
-      지도
-      <KakaoMap />
+      <Router />
     </>
   );
 }
