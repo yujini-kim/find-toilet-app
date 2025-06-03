@@ -6,8 +6,31 @@ declare global {
     kakao: any;
   }
 }
+export interface Toilet {
+  id: number;
+  toiletName: string;
+  roadAddress: string;
+  lotNumberAddress: string;
+  maleToiletCount: number;
+  maleUrinalCount: number;
+  maleDisabledToiletCount: number;
+  maleDisabledUrinalCount: number;
+  maleChildToiletCount: number;
+  maleChildUrinalCount: number;
+  femaleToiletCount: number;
+  femaleDisabledToiletCount: number;
+  femaleChildToiletCount: number;
+  openTime: string;
+  latitude: number;
+  longitude: number;
+  toiletType: string;
+}
 
-const KakaoMap = () => {
+interface KakaoMapProps {
+  toilets: Toilet[];
+}
+
+const KakaoMap = ({ toilets }: KakaoMapProps) => {
   const mapContainerRef = useRef<HTMLDivElement>(null);
   const [map, setMapInstance] = useState<any>(null);
   const { location } = useCurrentLocation();
@@ -30,7 +53,7 @@ const KakaoMap = () => {
         );
         const mapInstance = new window.kakao.maps.Map(mapContainerRef.current, {
           center: defaultCenter,
-          level: 3, //숫자가 클수록 많이 축소됨
+          level: 2, //숫자가 클수록 많이 축소됨
         });
 
         setMapInstance(mapInstance);
@@ -93,6 +116,30 @@ const KakaoMap = () => {
     customOverlay.setMap(map);
     map.setCenter(userPosition);
   }, [location, map]);
+
+  useEffect(() => {
+    if (!map || toilets.length === 0) return;
+
+    toilets.forEach((toilet) => {
+      const position = new window.kakao.maps.LatLng(
+        toilet.latitude,
+        toilet.longitude
+      );
+
+      const marker = new window.kakao.maps.Marker({
+        map,
+        position,
+      });
+
+      const infoWindow = new window.kakao.maps.InfoWindow({
+        content: `<div style="padding:6px;font-size:14px;">🚻 ${toilet.toiletName}</div>`,
+      });
+
+      window.kakao.maps.event.addListener(marker, "click", () => {
+        infoWindow.open(map, marker);
+      });
+    });
+  }, [map, toilets]);
 
   return (
     <div ref={mapContainerRef} style={{ width: "100%", height: "500px" }} />
