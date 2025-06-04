@@ -1,10 +1,6 @@
 // src/hooks/useCurrentLocation.ts
 import { useEffect, useState } from "react";
-
-interface Location {
-  latitude: number;
-  longitude: number;
-}
+import type { Location } from "../types/toiletsData";
 
 export function useCurrentLocation() {
   const [location, setLocation] = useState<Location | null>(null);

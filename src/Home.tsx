@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useCurrentLocation } from "./api/currentLocation";
 import { fetchNearbyToilets } from "./api/toilets";
-import CurrenLoacationBtn from "./components/currentLocationBtn";
+import CurrenLoacationBtn from "./components/CurrentLocationBtn";
 import KakaoMap from "./components/Kakaomap";
 
 function Home() {
@@ -18,6 +18,13 @@ function Home() {
     setToilets(data);
     console.log(data);
   };
+
+  useEffect(() => {
+    if (location) {
+      handleClick();
+    }
+  }, [location]);
+
   return (
     <>
       <KakaoMap toilets={toilets} />
