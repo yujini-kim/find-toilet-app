@@ -1,63 +1,33 @@
-import { useEffect, useRef, useState } from "react";
-import { useCurrentLocation } from "../api/currentLocation";
-import type { Toilet } from "../types/toiletsData";
+import { useKakaoLoader, Map } from "react-kakao-maps-sdk";
+import { useUserLocation } from "../api/UserLocation";
 import UserLocationMarker from "./UserLocationMarker";
-import ToiletsMarks from "./ToiletsMarkter";
 
-declare global {
-  interface Window {
-    kakao: any;
+const KakaoMap = () => {
+  const [loading, error] = useKakaoLoader({
+    appkey: import.meta.env.VITE_KAKAOMAP_API_KEY,
+    libraries: ["services"],
+  });
+
+  const { userLocation } = useUserLocation();
+
+  if (loading || !userLocation) {
+    return <div>로딩중...</div>;
   }
-}
-
-interface KakaoMapProps {
-  toilets: Toilet[];
-}
-
-const KakaoMap = ({ toilets }: KakaoMapProps) => {
-  const mapContainerRef = useRef<HTMLDivElement>(null);
-  const [map, setMapInstance] = useState<any>(null);
-  const { location } = useCurrentLocation();
-
-  // 1. Kakao Map script 로드 및 지도 생성
-  useEffect(() => {
-    if (!location) return;
-    const script = document.createElement("script");
-    script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${
-      import.meta.env.VITE_KAKAOMAP_API_KEY
-    }&autoload=false`;
-    script.async = true;
-
-    script.onload = () => {
-      window.kakao.maps.load(() => {
-        if (!mapContainerRef.current) return;
-
-        const defaultCenter = new window.kakao.maps.LatLng(
-          location?.latitude,
-          location?.longitude
-        );
-        const mapInstance = new window.kakao.maps.Map(mapContainerRef.current, {
-          center: defaultCenter,
-          level: 2, //숫자가 클수록 많이 축소됨
-        });
-
-        setMapInstance(mapInstance);
-        console.log("🗺️ 지도 생성 완료");
-      });
-    };
-
-    document.head.appendChild(script); //HTML head태그 안에 스크립트 태그를 직접 추가하는 코드
-  }, [location]);
+  if (error) {
+    alert("지도를 불러오는데 실패했습니다!");
+  }
 
   return (
-    <div ref={mapContainerRef} style={{ width: "100%", height: "500px" }}>
-      {map && (
-        <>
-          <UserLocationMarker map={map} location={location} />
-          <ToiletsMarks map={map} toilets={toilets} />
-        </>
-      )}
-    </div>
+    <Map
+      center={{ lat: userLocation.latitude, lng: userLocation.longitude }}
+      style={{ width: "100%", height: "400px" }}
+      level={3}
+    >
+      <UserLocationMarker
+        latitude={userLocation.latitude}
+        longitude={userLocation.longitude}
+      />
+    </Map>
   );
 };
 

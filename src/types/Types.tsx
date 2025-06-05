@@ -1,4 +1,4 @@
-export interface Toilet {
+export interface ToiletsProps {
   id: number;
   toiletName: string;
   roadAddress: string;
@@ -17,21 +17,7 @@ export interface Toilet {
   longitude: number;
   toiletType: string;
 }
-export interface Location {
+export interface UserLocationProps {
   latitude: number;
   longitude: number;
-}
-
-export interface MapProps {
-  map: any;
-}
-
-export interface MarkersProps {
-  map: any;
-  toilets: Toilet[];
-}
-
-export interface UserLocationProps {
-  map: any;
-  location: Location | null;
 }

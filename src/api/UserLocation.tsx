@@ -1,9 +1,10 @@
-// src/hooks/useCurrentLocation.ts
 import { useEffect, useState } from "react";
-import type { Location } from "../types/toiletsData";
+import type { UserLocationProps } from "../types/Types";
 
-export function useCurrentLocation() {
-  const [location, setLocation] = useState<Location | null>(null);
+export function useUserLocation() {
+  const [userLocation, setUserLocation] = useState<UserLocationProps | null>(
+    null
+  );
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -15,14 +16,14 @@ export function useCurrentLocation() {
     navigator.geolocation.getCurrentPosition(
       (position) => {
         const { latitude, longitude } = position.coords;
-        setLocation({ latitude, longitude });
+        setUserLocation({ latitude, longitude });
       },
       (err) => {
         setError("위치 정보를 가져오는 데 실패했어요.");
-        console.error("Geolocation error:", err);
+        console.error("현재 위치정보 에러:", err);
       }
     );
   }, []);
 
-  return { location, error };
+  return { userLocation, error };
 }
