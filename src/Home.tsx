@@ -1,10 +1,10 @@
-import KakaoMap from "./components/KakaoMap";
+import KakaoMap from "./components/Kakaomap";
 
 const Home = () => {
   return (
-    <>
+    <div>
       <KakaoMap />
-    </>
+    </div>
   );
 };
 

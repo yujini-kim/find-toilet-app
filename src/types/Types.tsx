@@ -21,3 +21,11 @@ export interface UserLocationProps {
   latitude: number;
   longitude: number;
 }
+
+export type MarkerType = {
+  position: {
+    lat: number;
+    lng: number;
+  };
+  content: string;
+};
