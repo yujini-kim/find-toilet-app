@@ -25,7 +25,7 @@ const SearchKeyWord = ({ onSearch, keyword, setKeyword }: SearchProps) => {
       </label>
 
       <button
-        className="appearance-none bg-transparent border border-[#ccc] outline-none w-[50px] h-[25px]"
+        className="appearance-none bg-transparent border border-[#ccc] outline-none w-[50px] h-[25px] cursor-pointer"
         onClick={onSearch}
       >
         검색
