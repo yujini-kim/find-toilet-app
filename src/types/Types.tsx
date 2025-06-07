@@ -22,10 +22,17 @@ export interface UserLocationProps {
   longitude: number;
 }
 
-export type MarkerType = {
+export interface ToiletsMarkerType {
+  latitude: number;
+  longitude: number;
+  toiletName?: string;
+  content?: string;
+}
+
+export interface SearchMarkerType {
   position: {
     lat: number;
     lng: number;
   };
   content: string;
-};
+}

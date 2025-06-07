@@ -1,13 +1,20 @@
 import { useState } from "react";
 import SearchKeyWord from "./SearchKeyWord";
-import type { MarkerType } from "../types/Types";
+import type { SearchMarkerType, ToiletsMarkerType } from "../types/Types";
+import { fetchNearbyToilets } from "../api/NearbyToilets";
 
 interface Props {
   map: kakao.maps.Map | null;
-  markers: MarkerType[];
-  setMarkers: React.Dispatch<React.SetStateAction<MarkerType[]>>;
+  markers: SearchMarkerType[];
+  setMarkers: React.Dispatch<React.SetStateAction<SearchMarkerType[]>>;
+  setToiletMarkers: React.Dispatch<React.SetStateAction<ToiletsMarkerType[]>>;
 }
-const SearchKeywordPanel = ({ map, markers, setMarkers }: Props) => {
+const SearchKeywordPanel = ({
+  map,
+  markers,
+  setMarkers,
+  setToiletMarkers,
+}: Props) => {
   const [keyword, setKeyword] = useState("");
 
   const onSearch = () => {
@@ -33,7 +40,25 @@ const SearchKeywordPanel = ({ map, markers, setMarkers }: Props) => {
       }
     });
   };
+  const handleClickMarker = async (marker: SearchMarkerType) => {
+    if (!map) return;
 
+    // 지도 중심 이동
+    const latlng = new kakao.maps.LatLng(
+      marker.position.lat,
+      marker.position.lng
+    );
+    map.setCenter(latlng);
+    map.setLevel(3);
+
+    // 주변 화장실 검색
+    const toilets = await fetchNearbyToilets({
+      latitude: marker.position.lat,
+      longitude: marker.position.lng,
+      radius: 500,
+    });
+    setToiletMarkers(toilets);
+  };
   return (
     <div className="h-[500px]">
       <SearchKeyWord
@@ -67,15 +92,7 @@ const SearchKeywordPanel = ({ map, markers, setMarkers }: Props) => {
                     alignItems: "center",
                     fontSize: "14px",
                   }}
-                  onClick={() => {
-                    map.setCenter(
-                      new kakao.maps.LatLng(
-                        marker.position.lat,
-                        marker.position.lng
-                      )
-                    );
-                    map.setLevel(3);
-                  }}
+                  onClick={() => handleClickMarker(marker)}
                 >
                   <h5>{marker.content}</h5>
                 </li>
