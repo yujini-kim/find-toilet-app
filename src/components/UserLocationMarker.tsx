@@ -13,6 +13,10 @@ const UserLocationMarker = ({ latitude, longitude }: UserLocationProps) => {
       <MapMarker
         position={{ lat: latitude, lng: longitude }}
         onClick={onHandleMarker}
+        image={{
+          src: "	https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_red.png",
+          size: { width: 40, height: 40 },
+        }}
       />
       {markerClick && (
         <CustomOverlayMap
