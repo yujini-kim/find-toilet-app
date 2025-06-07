@@ -35,4 +35,5 @@ export interface SearchMarkerType {
     lng: number;
   };
   content: string;
+  address: string;
 }

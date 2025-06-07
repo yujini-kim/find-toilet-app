@@ -11,10 +11,10 @@ const SearchKeyWord = ({ onSearch, keyword, setKeyword }: SearchProps) => {
   };
 
   return (
-    <div className="flex justify-center items-center gap-[5px] mt-[10px]">
+    <div className="flex  items-center gap-[10px] mt-[10px]">
       <label
         htmlFor="input"
-        className="border border-[#ccc] box-border h-[25px]"
+        className="border border-[#ccc] box-border w-[280px] h-[25px]"
       >
         <input
           id="input"
