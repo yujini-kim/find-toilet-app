@@ -66,7 +66,7 @@ const KakaoMap = () => {
           toiletName: t.toiletName || "공중화장실",
         }))
       );
-      console.log("마커클릭 후 화장실 검색 완료");
+      console.log("마커클릭 후 화장실 검색 완료", toilets);
     } catch (e) {
       console.error("마커 클릭 후 화장실 검색 실패", e);
     }
