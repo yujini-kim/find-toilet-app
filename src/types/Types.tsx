@@ -25,8 +25,15 @@ export interface UserLocationProps {
 export interface ToiletsMarkerType {
   latitude: number;
   longitude: number;
-  toiletName?: string;
-  content?: string;
+  toiletName: string;
+  roadAddress: string;
+  lotNumberAddress: string;
+  openTime: string;
+  maleToiletCount: number;
+  maleUrinalCount: number;
+  femaleToiletCount: number;
+  maleDisabledToiletCount: number;
+  femaleDisabledToiletCount: number;
 }
 
 export interface SearchMarkerType {
