@@ -39,7 +39,7 @@ const KakaoMap = () => {
       } catch {}
     };
     fetchToiletList();
-  }, [userLocation, map]);
+  }, [userLocation, map]); //처음 로드 시 내 위치 기준 주변화장실 리스트트
 
   useEffect(() => {
     console.log("업데이트된 화장실 마커:", toiletMarkers);
@@ -59,13 +59,7 @@ const KakaoMap = () => {
         radius: 500,
       });
 
-      setToiletMarkers(
-        toilets.map((t: any) => ({
-          latitude: Number(t.latitude),
-          longitude: Number(t.longitude),
-          toiletName: t.toiletName || "공중화장실",
-        }))
-      );
+      setToiletMarkers(toilets);
       console.log("마커클릭 후 화장실 검색 완료", toilets);
     } catch (e) {
       console.error("마커 클릭 후 화장실 검색 실패", e);
