@@ -100,8 +100,7 @@ const KakaoMap = () => {
   if (!userLocation) return <div>로딩중...</div>;
 
   return (
-    <div className="w-[500px]">
-      <UserLocationBtn moveToUserLocation={moveToUserLocation} />
+    <div className="w-[500px] flex flex-col items-center">
       <Map
         center={{
           lat: userLocation.latitude,
@@ -165,14 +164,15 @@ const KakaoMap = () => {
         {/* 화장실 마커 */}
         <NBToilet markers={toiletMarkers} />
       </Map>
-
-      {/* 키워드 검색 UI */}
-      <SearchKeywordPanel
-        map={map}
-        markers={searchMarkers}
-        setMarkers={setSearchMarkers}
-        setToiletMarkers={setToiletMarkers}
-      />
+      <div className="w-full flex justify-between">
+        <SearchKeywordPanel
+          map={map}
+          markers={searchMarkers}
+          setMarkers={setSearchMarkers}
+          setToiletMarkers={setToiletMarkers}
+        />
+        <UserLocationBtn moveToUserLocation={moveToUserLocation} />
+      </div>
     </div>
   );
 };

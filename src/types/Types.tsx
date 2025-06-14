@@ -44,3 +44,18 @@ export interface SearchMarkerType {
   content: string;
   address: string;
 }
+
+export interface ToiletInfoProps {
+  setSelectedMarker: React.Dispatch<
+    React.SetStateAction<ToiletsMarkerType | null>
+  >;
+  toiletName: string;
+  roadAddress: string;
+  lotNumberAddress: string;
+  openTime: string;
+  maleToiletCount: number;
+  maleUrinalCount: number;
+  femaleToiletCount: number;
+  maleDisabledToiletCount: number;
+  femaleDisabledToiletCount: number;
+}
