@@ -1,3 +1,35 @@
+import styled from "styled-components";
+
+const Button = styled.button`
+  height: 27px;
+  background-color: #59abe3;
+  padding: 0px 20px;
+  color: white;
+  font-weight: bold;
+  text-align: center;
+  cursor: pointer;
+  border: none;
+  border: 1px solid #59abe3;
+  transition: background-color 0.5s, color 0.5s, border 0.5s;
+
+  &:hover {
+    background-color: white;
+    color: #59abe3;
+    border: 1px solid #59abe3;
+  }
+`;
+
+const Input = styled.input`
+  all: unset;
+  font-size: 14px;
+`;
+
+const Label = styled.label`
+  border: 1px solid #ccc;
+  width: 280px;
+  height: 25px;
+`;
+
 interface SearchProps {
   onSearch: () => void;
   keyword: string;
@@ -12,24 +44,11 @@ const SearchKeyWord = ({ onSearch, keyword, setKeyword }: SearchProps) => {
 
   return (
     <div className="flex  items-center gap-[10px] mt-[10px]">
-      <label
-        htmlFor="input"
-        className="border border-[#ccc] box-border w-[280px] h-[25px]"
-      >
-        <input
-          id="input"
-          className="appearance-none bg-transparent border-none outline-none"
-          value={keyword}
-          onChange={onChangeValue}
-        ></input>
-      </label>
+      <Label htmlFor="input">
+        <Input id="input" value={keyword} onChange={onChangeValue}></Input>
+      </Label>
 
-      <button
-        className="appearance-none bg-transparent border border-[#ccc] outline-none w-[50px] h-[25px] cursor-pointer"
-        onClick={onSearch}
-      >
-        검색
-      </button>
+      <Button onClick={onSearch}>검색</Button>
     </div>
   );
 };

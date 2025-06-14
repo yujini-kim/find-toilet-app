@@ -67,7 +67,7 @@ const SearchKeywordPanel = ({
         keyword={keyword}
         setKeyword={setKeyword}
       />
-      <hr style={{ borderTop: "2px solid #5F5F5F", margin: "10px 0" }} />
+      <hr style={{ borderTop: "2px solid #59abe3", margin: "10px 0" }} />
 
       {map ? (
         <ul
